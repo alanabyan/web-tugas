@@ -1,101 +1,107 @@
+"use client";
+
 import Image from "next/image";
+import { Icon } from "@iconify/react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [jackpotValue, setJackpotValue] = useState<number>(0);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const min = 3200000000; // Minimal nilai jackpot
+    const max = 3400000000; // Maksimal nilai jackpot
+
+    const interval = setInterval(() => {
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      setJackpotValue(randomNumber);
+    }, 1000); // Update angka setiap 500ms
+
+    return () => clearInterval(interval); // Membersihkan interval saat komponen unmount
+  }, []);
+  return (
+    <div className="text-white">
+      <div className="flex justify-between items-center py-4 ">
+        <Image
+          src={
+            "https://files.sitestatic.net/ImageFile/20240405195151000000c6a4b73f9eCS2ABAQ__1024x200.webp"
+          }
+          className="max-w-[16.9rem] w-full"
+          width={1000}
+          height={1000}
+          alt="tele-88"
+        />
+        <div className="flex gap-x-6 px-2">
+          <button className="text-slate-200 bg-gray-400 w-[4.9rem] rounded-[5px] py-1">
+            LOGIN
+          </button>
+          <button className="text-white bg-red-600 w-[4.9rem] rounded-[5px] py-1">
+            DAFTAR
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      </div>
+      <div
+        className="h-24 bg-blend-overlay flex items-center justify-center gap-x-12"
+        style={{
+          background: `
+      radial-gradient(59.46% 64.36% at 50% 80.42%, hsla(0, 0%, 100%, 0.5) 0%, rgba(213, 212, 212, 0.5) 33.89%, rgba(0, 0, 0, 0.5) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.126038), rgba(0, 0, 0, 0.0001)),
+      #8b6914
+    `,
+        }}
+      >
+        <div className=" flex flex-col items-center">
+          <Icon icon={"mdi:slot-machine"} width={50} height={50} />
+          <p>SLOTS</p>
+        </div>
+        <div className="flex flex-col items-center">
           <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src={"https://files.sitestatic.net/images/live_game_icon.gif?v=1"}
+            width={50}
+            height={50}
+            alt=""
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          <p>LIVE GAMES</p>
+        </div>
+        <div className="">
+          <Icon icon={"mdi:casino-chip"} width={50} height={50} />
+        </div>
+        <div className="">
+          <Icon icon="icon-park-solid:poker" width="50" height="50" />
+        </div>
+        <div className="">
+          <Icon icon="game-icons:fishing" width="70" height="70" />
+        </div>
+      </div>
+      <div
+        className=" cursor-pointer 
+      "
+      >
+        <Link href={"/spin"}>
           <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src={
+              "https://files.sitestatic.net/banners/65379729a0e1f_slot gacor.png"
+            }
+            className="w-screen h-[40%]"
+            width={1000}
+            height={1000}
+            alt=""
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </Link>
+      </div>
+      <div className="flex justify-center py-4 relative">
+        <Image
+          src={
+            "https://files.sitestatic.net/progressive_img/onix_desktop_jackpot-5.gif?v=3"
+          }
+          width={1000}
+          height={1000}
+          alt=""
+        />
+        <h1 className="absolute text-2xl md:text-5xl bottom-[22px] md:bottom-12 font-bold bg-gradient-to-l from-[#F3CE7D] to-[#D39643] inline-block text-transparent bg-clip-text ">{`IDR ${jackpotValue.toLocaleString(
+          "id-ID"
+        )}`}</h1>
+      </div>
     </div>
   );
 }
