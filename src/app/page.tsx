@@ -107,7 +107,7 @@ export default function Home() {
           height={200}
           alt="Jackpot"
         />
-        <h1 className="absolute text-xl sm:text-3xl md:text-5xl bottom-[20px] sm:bottom-[30px] font-bold bg-gradient-to-l from-[#F3CE7D] to-[#D39643] inline-block text-transparent bg-clip-text">
+        <h1 className="absolute text-xl sm:text-3xl md:text-5xl md:bottom-12 top-[32px] font-bold bg-gradient-to-l from-[#F3CE7D] to-[#D39643] inline-block text-transparent bg-clip-text">
           {`IDR ${jackpotValue.toLocaleString("id-ID")}`}
         </h1>
       </div>
