@@ -16,6 +16,10 @@ const SpinWheel = () => {
   const [result, setResult] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  const numbers = [0, 0, 1, 0, 0, 8, 0, 0]; // Angka pada roda
+  const sectors = numbers.length; // Jumlah sektor
+  const sectorAngle = 360 / sectors; // Sudut setiap sektor
+
   const handleSpin = () => {
     if (nominal === null || nominal <= 0) {
       alert("Masukkan nominal yang valid!");
@@ -24,9 +28,17 @@ const SpinWheel = () => {
 
     setIsSpinning(true);
     setIsSpinAllowed(false); // Tidak bisa spin lagi setelah diklik
-    const spinResult = Math.floor(Math.random() * 8) + 1; // Random angka 1-8
+
+    const randomSpin = Math.floor(Math.random() * 360); // Sudut akhir acak
+    const extraSpins = 5 * 360; // Tambahan putaran penuh
+    const finalRotation = randomSpin + extraSpins;
+
     setTimeout(() => {
       setIsSpinning(false);
+      const normalizedAngle = finalRotation % 360; // Sudut akhir normalisasi
+      const selectedIndex = Math.floor(normalizedAngle / sectorAngle) % sectors; // Hitung indeks sektor
+      const spinResult = numbers[selectedIndex];
+
       setResult(spinResult);
 
       if (spinResult === 0) {
@@ -64,28 +76,42 @@ const SpinWheel = () => {
       </div>
 
       <div className="container relative">
-        <button
-          className={`spinBtn ${
-            !isSpinAllowed ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={handleSpin}
-          disabled={!isSpinAllowed || isSpinning} // Disable jika tidak diizinkan atau sedang spinning
-        >
-          {isSpinning ? "Spinning..." : "Spin"}
-        </button>
+        {/* Tanda Panah */}
+        <div
+          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          style={{
+            width: "0",
+            height: "0",
+            borderLeft: "15px solid transparent",
+            borderRight: "15px solid transparent",
+            borderBottom: "20px solid white",
+          }}
+        ></div>
+
+        {/* Roda */}
         <div
           className={`wheel ${isSpinning ? "animate-spin" : ""}`}
           style={{
             transform: isSpinning
-              ? `rotate(${360 * 5 + (result || 0) * 45}deg)`
-              : "none",
+              ? "none"
+              : `rotate(${(result || 0) * sectorAngle}deg)`,
+            transition: isSpinning ? "none" : "transform 5s ease-out",
           }}
         >
-          {[...Array(8)].map((_, i) => (
+          <button
+            className={`spinBtn ${
+              !isSpinAllowed ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handleSpin}
+            disabled={!isSpinAllowed || isSpinning} // Disable jika tidak diizinkan atau sedang spinning
+          >
+            {isSpinning ? "Spinning..." : "Spin"}
+          </button>
+          {[...Array(sectors)].map((_, i) => (
             <span key={i} style={{ "--i": i } as React.CSSProperties}></span>
           ))}
           <div className="number">
-            {[0, 0, 1, 0, 0, 8, 0, 0].map((num, i) => (
+            {numbers.map((num, i) => (
               <b key={i} style={{ "--i": i } as React.CSSProperties}>
                 {num}
               </b>
