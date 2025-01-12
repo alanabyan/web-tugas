@@ -62,20 +62,22 @@ const SpinWheel = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-black text-white">
-      <div className="mb-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
+      {/* Input Nominal */}
+      <div className="mb-4 w-full max-w-md">
         <label className="block mb-2 text-lg">Masukkan Nominal:</label>
         <input
           type="number"
           value={nominal || ""}
           onChange={handleInputChange}
-          className="px-4 py-2 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Masukkan nominal"
           disabled={isSpinning} // Disable input saat spinning
         />
       </div>
 
-      <div className="container relative">
+      {/* Container Roda */}
+      <div className="container relative flex items-center justify-center w-[350px] h-[350px]">
         {/* Tanda Panah */}
         <div
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
