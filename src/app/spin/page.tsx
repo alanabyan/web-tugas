@@ -69,7 +69,7 @@ const SpinWheel = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
+    <div className="flex flex-col z-50 items-center justify-center min-h-screen bg-black text-white px-4">
       {/* Konfeti */}
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
