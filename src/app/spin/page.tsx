@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Confetti from "react-confetti"; // Import React-Confetti
 import {
   Dialog,
   DialogContent,
@@ -15,6 +16,7 @@ const SpinWheel = () => {
   const [isSpinAllowed, setIsSpinAllowed] = useState(false);
   const [result, setResult] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false); // State untuk konfeti
 
   const numbers = [0, 0, 1, 0, 0, 8, 0, 0]; // Angka pada roda
   const sectors = numbers.length; // Jumlah sektor
@@ -41,6 +43,11 @@ const SpinWheel = () => {
 
       setResult(spinResult);
 
+      if (spinResult === 8) {
+        setShowConfetti(true); // Tampilkan konfeti jika hasilnya 8
+        setTimeout(() => setShowConfetti(false), 5000); // Hilangkan konfeti setelah 5 detik
+      }
+
       if (spinResult === 0) {
         setNominal(0);
       } else {
@@ -63,6 +70,11 @@ const SpinWheel = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
+      {/* Konfeti */}
+      {showConfetti && (
+        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      )}
+
       {/* Input Nominal */}
       <div className="mb-4 w-full max-w-md">
         <label className="block mb-2 text-lg">Masukkan Nominal:</label>
